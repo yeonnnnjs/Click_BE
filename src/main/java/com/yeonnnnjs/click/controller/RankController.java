@@ -1,6 +1,7 @@
 package com.yeonnnnjs.click.controller;
 
 import com.yeonnnnjs.click.data.Entity.ClickRank;
+import com.yeonnnnjs.click.data.dto.GetCountDto;
 import com.yeonnnnjs.click.data.dto.RankDto;
 import com.yeonnnnjs.click.service.RankService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class RankController {
     }
 
     @PostMapping("/getcount")
-    public ResponseEntity<Long> getCount(String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(rankService.getCount(name));
+    public ResponseEntity<Long> getCount(@RequestBody GetCountDto getCountDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(rankService.getCount(getCountDto.getName()));
     }
 }

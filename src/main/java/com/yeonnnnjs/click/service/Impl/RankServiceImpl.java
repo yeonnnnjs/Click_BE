@@ -30,14 +30,17 @@ public class RankServiceImpl implements RankService {
     @Override
     public List<ClickRank> getRank() {
         List<ClickRank> ranks = rankRepository.findAll();
-        ranks.sort(Comparator.comparing(ClickRank::getClickCount));
+        ranks.sort(Comparator.comparing(ClickRank::getClickCount).reversed());
         return ranks;
     }
 
     @Override
     public Long getCount(String name) {
-        ClickRank clickRank = rankRepository.findByPlayerName(name);
-        if(clickRank == null) return -1L;
-        else return clickRank.getClickCount();
+        System.out.println(name);
+        if(!rankRepository.existsByPlayerName(name)) return -1L;
+        else {
+            ClickRank clickRank = rankRepository.findByPlayerName(name);
+            return clickRank.getClickCount();
+        }
     }
 }

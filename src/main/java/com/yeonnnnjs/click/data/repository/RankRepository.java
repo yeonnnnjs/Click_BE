@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RankRepository extends JpaRepository<ClickRank, String> {
     ClickRank findByPlayerName(String name);
+
+    Boolean existsByPlayerName(String name);
 }
