@@ -25,7 +25,3 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation "org.mariadb.jdbc:mariadb-java-client"
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
