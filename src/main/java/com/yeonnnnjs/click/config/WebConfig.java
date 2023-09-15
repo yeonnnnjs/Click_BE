@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("clickgame.kro.kr")
                 .allowedMethods("GET", "POST")
                 .allowCredentials(false)
                 .maxAge(3000);
