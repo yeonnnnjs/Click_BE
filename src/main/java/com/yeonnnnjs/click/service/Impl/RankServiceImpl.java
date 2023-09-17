@@ -30,7 +30,11 @@ public class RankServiceImpl implements RankService {
     @Override
     public List<ClickRank> getRank() {
         List<ClickRank> ranks = rankRepository.findAll();
-        ranks.sort(Comparator.comparing(ClickRank::getClickCount).reversed());
+        ranks.sort(
+                Comparator.comparing(ClickRank::getClickCount)
+                        .reversed()
+                        .thenComparing(ClickRank::getTimeLog)
+        );
         return ranks;
     }
 
