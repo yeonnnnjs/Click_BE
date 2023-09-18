@@ -25,7 +25,6 @@ public class RankController {
 
     @PostMapping("/addrank")
     public String addRank(@RequestBody RankDto rankDto) {
-        rankDto.setTimestamp(new Date());
         return rankService.addRank(rankDto);
     }
 

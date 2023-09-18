@@ -10,7 +10,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class RankDto {
-    private String name;
-    private ClickLog[] clickLogs;
+public class ClickLog {
+    Long count;
+    Date timestamp;
 }

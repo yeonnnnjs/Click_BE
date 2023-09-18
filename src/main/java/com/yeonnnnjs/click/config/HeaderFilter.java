@@ -3,6 +3,7 @@ package com.yeonnnnjs.click.config;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ class HeaderFilter implements Filter {
     }
 
     private boolean isValidReferer(String referer) {
-        if (referer != null && referer.contains("clickgame.kro.kr")) {
+        if (referer != null && referer.contains("localhost")) {
             return true;
         } else {
             return false;

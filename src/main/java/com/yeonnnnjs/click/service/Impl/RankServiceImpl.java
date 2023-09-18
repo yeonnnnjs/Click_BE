@@ -1,6 +1,7 @@
 package com.yeonnnnjs.click.service.Impl;
 
 import com.yeonnnnjs.click.data.Entity.ClickRank;
+import com.yeonnnnjs.click.data.dto.ClickLog;
 import com.yeonnnnjs.click.data.dto.RankDto;
 import com.yeonnnnjs.click.data.repository.RankRepository;
 import com.yeonnnnjs.click.service.RankService;
@@ -19,10 +20,20 @@ public class RankServiceImpl implements RankService {
 
     @Override
     public String addRank(RankDto rankDto) {
+        int index = rankDto.getClickLogs().length-1;
+        ClickLog[] clickLogs = rankDto.getClickLogs();
+
+        for (int i = 0; i < index-1; i++) {
+            if(clickLogs[i+1].getCount() - clickLogs[i].getCount() > 240) {
+                return "어허";
+            }
+        }
+        
+        ClickLog clickLog = rankDto.getClickLogs()[index];
         ClickRank rank = new ClickRank();
         rank.setPlayerName(rankDto.getName());
-        rank.setClickCount(rankDto.getCount());
-        rank.setTimeLog(rankDto.getTimestamp());
+        rank.setClickCount(clickLog.getCount());
+        rank.setTimeLog(clickLog.getTimestamp());
         rankRepository.save(rank);
         return "Success";
     }
