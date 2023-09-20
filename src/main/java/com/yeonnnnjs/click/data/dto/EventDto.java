@@ -10,7 +10,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class ClickLog {
-    Long count;
-    Date timestamp;
+public class EventDto {
+    String key;
+    EventValue value;
 }

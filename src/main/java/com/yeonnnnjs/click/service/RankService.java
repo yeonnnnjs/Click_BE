@@ -6,7 +6,7 @@ import com.yeonnnnjs.click.data.dto.RankDto;
 import java.util.List;
 
 public interface RankService {
-    String addRank(RankDto rankDto);
+    String addRank();
 
     List<ClickRank> getRank();
 

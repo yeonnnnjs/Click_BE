@@ -23,9 +23,9 @@ public class RankController {
         this.rankService = rankService;
     }
 
-    @PostMapping("/addrank")
-    public String addRank(@RequestBody RankDto rankDto) {
-        return rankService.addRank(rankDto);
+    @GetMapping("/addrank")
+    public String addRank() {
+        return rankService.addRank();
     }
 
     @GetMapping("/getrank")
