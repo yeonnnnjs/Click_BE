@@ -8,6 +8,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class GetCountDto {
-    private String name;
+public class KeyDto {
+    private String key;
 }

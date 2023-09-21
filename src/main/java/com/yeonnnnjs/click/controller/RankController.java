@@ -2,7 +2,7 @@ package com.yeonnnnjs.click.controller;
 
 import com.yeonnnnjs.click.data.Entity.ClickRank;
 import com.yeonnnnjs.click.data.dto.GetCountDto;
-import com.yeonnnnjs.click.data.dto.RankDto;
+import com.yeonnnnjs.click.data.dto.KeyDto;
 import com.yeonnnnjs.click.service.RankService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -23,9 +22,9 @@ public class RankController {
         this.rankService = rankService;
     }
 
-    @GetMapping("/addrank")
-    public String addRank() {
-        return rankService.addRank();
+    @PostMapping("/addrank")
+    public Boolean addRank(@RequestBody KeyDto keyDto) {
+        return rankService.addRank(keyDto.getKey());
     }
 
     @GetMapping("/getrank")

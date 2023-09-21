@@ -1,29 +1,40 @@
 package com.yeonnnnjs.click.service.Impl;
 
 import com.yeonnnnjs.click.data.Entity.ClickRank;
-import com.yeonnnnjs.click.data.dto.EventDto;
-import com.yeonnnnjs.click.data.dto.RankDto;
+import com.yeonnnnjs.click.data.dto.EventValue;
 import com.yeonnnnjs.click.data.repository.RankRepository;
 import com.yeonnnnjs.click.service.RankService;
+import com.yeonnnnjs.click.service.RedisService;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RankServiceImpl implements RankService {
     private final RankRepository rankRepository;
+    private final RedisService redisService;
 
-    public RankServiceImpl(RankRepository rankRepository) {
+    public RankServiceImpl(RankRepository rankRepository, RedisService redisService) {
         this.rankRepository = rankRepository;
+        this.redisService = redisService;
     }
 
     @Override
-    public String addRank() {
-        ClickRank rank = new ClickRank();
-        rankRepository.save(rank);
-        return "Success";
+    public Boolean addRank(String key) {
+        EventValue eventValue = redisService.getData(key);
+        if(eventValue == null) {
+            return false;
+        }
+        else {
+            ClickRank rank = new ClickRank();
+            rank.setClickCount(eventValue.getCount());
+            rank.setPlayerName(eventValue.getName());
+            rank.setTimeLog(eventValue.getTimestamp());
+            rankRepository.save(rank);
+            return true;
+        }
     }
 
     @Override
@@ -39,10 +50,9 @@ public class RankServiceImpl implements RankService {
 
     @Override
     public Long getCount(String name) {
-        System.out.println(name);
-        if(!rankRepository.existsByPlayerName(name)) return -1L;
+        ClickRank clickRank = rankRepository.findByPlayerName(name);
+        if(clickRank == null) return -1L;
         else {
-            ClickRank clickRank = rankRepository.findByPlayerName(name);
             return clickRank.getClickCount();
         }
     }
