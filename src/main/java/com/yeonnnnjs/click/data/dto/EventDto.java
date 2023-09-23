@@ -11,6 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class EventDto {
-    String key;
-    EventValue value;
+    String name;
+    Date timestamp;
 }

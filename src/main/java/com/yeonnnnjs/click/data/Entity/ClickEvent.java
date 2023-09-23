@@ -1,10 +1,11 @@
 package com.yeonnnnjs.click.data.Entity;
 
-import com.yeonnnnjs.click.data.dto.EventValue;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+
+import java.util.Date;
 
 @RedisHash
 @Getter
@@ -12,7 +13,9 @@ import org.springframework.data.redis.core.RedisHash;
 public class ClickEvent {
 
     @Id
-    private String key;
+    private String name;
 
-    private EventValue value;
+    private Long count;
+
+    private Date timestamp;
 }

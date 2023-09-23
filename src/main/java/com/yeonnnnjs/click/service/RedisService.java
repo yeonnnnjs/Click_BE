@@ -6,8 +6,4 @@ import com.yeonnnnjs.click.data.dto.EventValue;
 
 public interface RedisService {
     void setData(EventDto eventDto) throws JsonProcessingException;
-
-    EventValue getData(String key);
-
-    void deleteData(String key);
 }

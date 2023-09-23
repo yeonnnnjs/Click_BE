@@ -1,37 +1,39 @@
 package com.yeonnnnjs.click.service.Impl;
 
+import com.google.gson.Gson;
+import com.yeonnnnjs.click.data.Entity.ClickEvent;
 import com.yeonnnnjs.click.data.Entity.ClickRank;
-import com.yeonnnnjs.click.data.dto.EventValue;
 import com.yeonnnnjs.click.data.repository.RankRepository;
 import com.yeonnnnjs.click.service.RankService;
-import com.yeonnnnjs.click.service.RedisService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RankServiceImpl implements RankService {
     private final RankRepository rankRepository;
-    private final RedisService redisService;
+    private final RedisTemplate redisTemplate;
 
-    public RankServiceImpl(RankRepository rankRepository, RedisService redisService) {
+    public RankServiceImpl(RankRepository rankRepository, RedisTemplate redisTemplate) {
         this.rankRepository = rankRepository;
-        this.redisService = redisService;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public Boolean addRank(String key) {
-        EventValue eventValue = redisService.getData(key);
-        if(eventValue == null) {
+    public Boolean addRank(String name) {
+        Gson gson = new Gson();
+        ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index(name, -1).toString(), ClickEvent.class);
+
+        if(clickEvent == null) {
             return false;
         }
         else {
             ClickRank rank = new ClickRank();
-            rank.setClickCount(eventValue.getCount());
-            rank.setPlayerName(eventValue.getName());
-            rank.setTimeLog(eventValue.getTimestamp());
+            rank.setClickCount(clickEvent.getCount());
+            rank.setPlayerName(clickEvent.getName());
+            rank.setTimeLog(clickEvent.getTimestamp());
             rankRepository.save(rank);
             return true;
         }
@@ -51,7 +53,7 @@ public class RankServiceImpl implements RankService {
     @Override
     public Long getCount(String name) {
         ClickRank clickRank = rankRepository.findByPlayerName(name);
-        if(clickRank == null) return -1L;
+        if(clickRank == null) return 0L;
         else {
             return clickRank.getClickCount();
         }

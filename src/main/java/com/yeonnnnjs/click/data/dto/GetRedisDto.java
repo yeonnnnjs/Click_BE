@@ -2,8 +2,6 @@ package com.yeonnnnjs.click.data.dto;
 
 import lombok.*;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,5 +9,5 @@ import java.util.Date;
 @Getter
 @Setter
 public class GetRedisDto {
-    private String key;
+    private String name;
 }

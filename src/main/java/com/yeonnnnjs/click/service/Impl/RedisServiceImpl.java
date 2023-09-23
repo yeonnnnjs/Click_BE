@@ -1,6 +1,7 @@
 package com.yeonnnnjs.click.service.Impl;
 
 import com.google.gson.Gson;
+import com.yeonnnnjs.click.data.Entity.ClickEvent;
 import com.yeonnnnjs.click.data.dto.EventDto;
 import com.yeonnnnjs.click.data.dto.EventValue;
 import com.yeonnnnjs.click.service.RedisService;
@@ -18,18 +19,15 @@ public class RedisServiceImpl implements RedisService {
 
     public void setData(EventDto eventDto) {
         Gson gson = new Gson();
-        String jsonString = gson.toJson(eventDto.getValue());
-        redisTemplate.opsForValue().set(eventDto.getKey(), jsonString);
-    }
+        ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index(eventDto.getName(), -1), ClickEvent.class);
 
-    public EventValue getData(String key){
-        String value = redisTemplate.opsForValue().get(key);
-        Gson gson = new Gson();
-        EventValue eventValue = gson.fromJson(value, EventValue.class);
-        return eventValue;
-    }
+        Long count = clickEvent == null ? 0 : clickEvent.getCount()+1;
+        EventValue eventValue = new EventValue();
+        eventValue.setName(eventDto.getName());
+        eventValue.setCount(count);
+        eventValue.setTimestamp(eventDto.getTimestamp());
 
-    public void deleteData(String key){
-        redisTemplate.delete(key);
+        String jsonString = gson.toJson(eventValue);
+        redisTemplate.opsForList().rightPush(eventDto.getName(), jsonString);
     }
 }
