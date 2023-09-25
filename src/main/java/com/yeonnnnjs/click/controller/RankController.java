@@ -1,7 +1,8 @@
 package com.yeonnnnjs.click.controller;
 
 import com.yeonnnnjs.click.data.Entity.ClickRank;
-import com.yeonnnnjs.click.data.dto.GetRedisDto;
+import com.yeonnnnjs.click.data.dto.EventDto;
+import com.yeonnnnjs.click.data.dto.RankDto;
 import com.yeonnnnjs.click.service.RankService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,18 @@ public class RankController {
     }
 
     @PostMapping("/addrank")
-    public Boolean addRank(@RequestBody GetRedisDto getRedisDto) {
-        return rankService.addRank(getRedisDto.getName());
+    public Boolean addRank(@RequestBody EventDto eventDto) {
+        return rankService.addRank(eventDto.getName());
     }
 
     @GetMapping("/getrank")
-    public ResponseEntity<List<ClickRank>> getRank() {
-        List<ClickRank> rankDtos = rankService.getRank();
+    public ResponseEntity<List<RankDto>> getRank() {
+        List<RankDto> rankDtos = rankService.getRank();
         return ResponseEntity.status(HttpStatus.OK).body(rankDtos);
     }
 
     @PostMapping("/getcount")
-    public ResponseEntity<Long> getCount(@RequestBody GetRedisDto getRedisDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(rankService.getCount(getRedisDto.getName()));
+    public ResponseEntity<Long> getCount(@RequestBody EventDto eventDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(rankService.getCount(eventDto.getName()));
     }
 }

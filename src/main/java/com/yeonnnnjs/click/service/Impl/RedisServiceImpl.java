@@ -8,6 +8,9 @@ import com.yeonnnnjs.click.service.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 public class RedisServiceImpl implements RedisService {
 
@@ -21,11 +24,12 @@ public class RedisServiceImpl implements RedisService {
         Gson gson = new Gson();
         ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index(eventDto.getName(), -1), ClickEvent.class);
 
+        Date date = new Date(new Date().getTime() + 9*3600*1000);
         Long count = clickEvent == null ? 0 : clickEvent.getCount()+1;
         EventValue eventValue = new EventValue();
         eventValue.setName(eventDto.getName());
         eventValue.setCount(count);
-        eventValue.setTimestamp(eventDto.getTimestamp());
+        eventValue.setTimestamp(date);
 
         String jsonString = gson.toJson(eventValue);
         redisTemplate.opsForList().rightPush(eventDto.getName(), jsonString);

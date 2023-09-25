@@ -1,5 +1,6 @@
 package com.yeonnnnjs.click.data.dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.Date;
@@ -10,6 +11,8 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class EventDto {
-    String name;
+public class RankDto {
+    private String playerName;
+    private Long clickCount;
+    private String timestamp;
 }

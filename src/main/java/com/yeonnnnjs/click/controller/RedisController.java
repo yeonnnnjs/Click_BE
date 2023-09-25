@@ -2,7 +2,6 @@ package com.yeonnnnjs.click.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yeonnnnjs.click.data.dto.EventDto;
-import com.yeonnnnjs.click.data.dto.GetRedisDto;
 import com.yeonnnnjs.click.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ public class RedisController {
     @PostMapping("/setredis")
     public ResponseEntity<String> setRedis(@RequestBody EventDto eventDto) throws JsonProcessingException {
         redisService.setData(eventDto);
-        return ResponseEntity.status(HttpStatus.OK).body("d");
+        return ResponseEntity.status(HttpStatus.OK).body("set data in redis!");
     }
-
 }
