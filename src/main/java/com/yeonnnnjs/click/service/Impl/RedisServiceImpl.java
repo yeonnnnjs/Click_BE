@@ -24,12 +24,11 @@ public class RedisServiceImpl implements RedisService {
         Gson gson = new Gson();
         ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index(eventDto.getName(), -1), ClickEvent.class);
 
-        Date date = new Date(new Date().getTime() + 9*3600*1000);
         Long count = clickEvent == null ? 0 : clickEvent.getCount()+1;
         EventValue eventValue = new EventValue();
         eventValue.setName(eventDto.getName());
         eventValue.setCount(count);
-        eventValue.setTimestamp(date);
+        eventValue.setTimestamp(new Date());
 
         String jsonString = gson.toJson(eventValue);
         redisTemplate.opsForList().rightPush(eventDto.getName(), jsonString);
