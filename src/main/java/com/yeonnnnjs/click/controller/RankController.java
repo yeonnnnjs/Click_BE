@@ -1,6 +1,5 @@
 package com.yeonnnnjs.click.controller;
 
-import com.yeonnnnjs.click.data.Entity.ClickRank;
 import com.yeonnnnjs.click.data.dto.EventDto;
 import com.yeonnnnjs.click.data.dto.RankDto;
 import com.yeonnnnjs.click.service.RankService;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
+@RequestMapping("/rank")
 @RestController
 public class RankController {
     private final RankService rankService;

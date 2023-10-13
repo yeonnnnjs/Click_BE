@@ -27,7 +27,7 @@ public class RankServiceImpl implements RankService {
     @Override
     public Boolean addRank(String name) {
         Gson gson = new Gson();
-        ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index(name, -1).toString(), ClickEvent.class);
+        ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index("rank"+name, -1).toString(), ClickEvent.class);
 
         if(clickEvent == null) {
             return false;

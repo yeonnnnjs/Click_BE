@@ -21,9 +21,15 @@ public class RedisController {
         this.redisService = redisService;
     }
 
-    @PostMapping("/setredis")
-    public ResponseEntity<String> setRedis(@RequestBody EventDto eventDto) throws JsonProcessingException {
-        redisService.setData(eventDto);
+    @PostMapping("/rank/setredis")
+    public ResponseEntity<String> setRedisForRank(@RequestBody EventDto eventDto) throws JsonProcessingException {
+        redisService.setData(eventDto, "rank");
+        return ResponseEntity.status(HttpStatus.OK).body("set data in redis!");
+    }
+
+    @PostMapping("/game/setredis")
+    public ResponseEntity<String> setRedisForGame(@RequestBody EventDto eventDto) throws JsonProcessingException {
+        redisService.setData(eventDto, "game");
         return ResponseEntity.status(HttpStatus.OK).body("set data in redis!");
     }
 }
