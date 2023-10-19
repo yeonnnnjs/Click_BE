@@ -23,6 +23,7 @@ public class GameServiceImpl implements GameService {
             return 0L;
         }
         else {
+            redisTemplate.delete("game"+name);
             return clickEvent.getCount();
         }
     }
