@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RankServiceImpl implements RankService {
@@ -25,20 +26,16 @@ public class RankServiceImpl implements RankService {
     }
 
     @Override
-    public Boolean addRank(String name) {
+    public void addRank(String name) {
         Gson gson = new Gson();
         ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index("rank"+name, -1).toString(), ClickEvent.class);
 
-        if(clickEvent == null) {
-            return false;
-        }
-        else {
+        if(clickEvent != null) {
             ClickRank rank = new ClickRank();
             rank.setClickCount(clickEvent.getCount());
             rank.setPlayerName(clickEvent.getName());
             rank.setTimeLog(clickEvent.getTimestamp());
             rankRepository.save(rank);
-            return true;
         }
     }
 

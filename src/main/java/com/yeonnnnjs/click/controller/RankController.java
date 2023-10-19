@@ -23,8 +23,8 @@ public class RankController {
     }
 
     @PostMapping("/addrank")
-    public Boolean addRank(@RequestBody EventDto eventDto) {
-        return rankService.addRank(eventDto.getName());
+    public void addRank(@RequestBody EventDto eventDto) {
+        rankService.addRank(eventDto.getName());
     }
 
     @GetMapping("/getrank")
