@@ -16,13 +16,14 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Long getScore(String name) {
+        Object object = redisTemplate.opsForList().index("game"+name, -1);
         Gson gson = new Gson();
-        ClickEvent clickEvent = gson.fromJson(redisTemplate.opsForList().index("game"+name, -1).toString(), ClickEvent.class);
 
-        if(clickEvent == null) {
+        if(object == null) {
             return 0L;
         }
         else {
+            ClickEvent clickEvent = gson.fromJson(object.toString(), ClickEvent.class);
             redisTemplate.delete("game"+name);
             return clickEvent.getCount();
         }
