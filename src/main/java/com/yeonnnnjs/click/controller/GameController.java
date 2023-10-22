@@ -12,7 +12,7 @@ import javax.xml.transform.Result;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 @RestController
 public class GameController {
     private final GameService gameService;

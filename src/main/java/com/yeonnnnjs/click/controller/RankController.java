@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/rank")
+@RequestMapping("/api/rank")
 @RestController
 public class RankController {
     private final RankService rankService;
